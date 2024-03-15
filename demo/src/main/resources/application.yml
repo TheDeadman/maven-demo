@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    environment:
+      url: "http://localhost:3001"
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - OPTIONS
+      routes:
+        - id: testModule
+          uri: http://localhost:3001/
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+            - Custom=Banana
